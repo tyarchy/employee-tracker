@@ -65,6 +65,16 @@ const questions = () => {
           break;
         case "add department":
           addDepartment()
+          break;
+        case "add a role":
+          addRole()
+          break; 
+        case "add employee":
+          addEmployee()
+        case "update Employee":
+          updateEmployee()
+          break;
+           
       }
     });
 };
@@ -74,18 +84,21 @@ const viewDepartments = () => {
   db.query("SELECT * FROM employees.department", function (err, results) {
     console.table(results);
   });
+  questions();
 };
 
 const viewEmployees = () => {
   db.query("SELECT * FROM employees.employees", function (err, results) {
     console.table(results);
   });
+  questions();
 };
 
 const viewRolls = () => {
   db.query("SELECT * FROM employees.roles", function (err, results) {
     console.table(results);
   });
+  questions();
 };
 
 // add a department to the database
@@ -109,9 +122,101 @@ const addDepartment = () => {
 })
 };
 
+const addRole = () => {
+  
+  inquirer.prompt([
+    {
+      name: 'job_title',
+      type: 'input',
+      message: 'Add a new role'
+    }
+  ])
+  
+  .then((answer) => {
+  db.query(
+    "INSERT INTO roles SET ?", answer);
+  db.query("SELECT * FROM roles", function (err, results) { 
+    console.table(results);
+    questions();
+  })
+})
+};
+
+const addEmployee = () => {
+  
+  inquirer.prompt([
+    {
+      name: 'first_name',
+      type: 'input',
+      message: 'Add a new Employee first name'
+    }    
+  ])
+  
+  .then((answer) => {
+  db.query(
+    "INSERT INTO employees SET ?", answer);
+  db.query("SELECT * FROM employees", function (err, results) { 
+    console.table(results);
+    questions();
+  })
+})
+};
+
 
 
 questions();
+
+
+
+
+
+
+
+
+
+
+// {
+    //   name: 'last_name',
+    //   type: 'input',
+    //   message: 'Add a new Employee last name'
+    // },
+    // {
+    //   name: 'job_title',
+    //   type: 'input',
+    //   message: 'Add a new role'
+    // },
+
+
+
+
+
+
+
+
+
+// const updateEmployee = () => {
+  
+//   inquirer.prompt([
+//     {
+//       name: 'job_title',
+//       type: 'input',
+//       message: 'Add new role'
+//     }
+//   ])
+  
+//   .then((answer) => {
+//   db.query(
+//     "INSERT INTO roles SET ?", answer);
+//   db.query("SELECT * FROM roles", function (err, results) { 
+//     console.table(results);
+//     questions();
+//   })
+// })
+// };
+
+
+
+
 
 
   //  add a employee

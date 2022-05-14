@@ -25,7 +25,6 @@ last_name VARCHAR(30) NOT NULL,
 job_title VARCHAR(30) NOT NULL,
 salary INTEGER NOT NULL,
 manager VARCHAR(30),
-
 role_id INTEGER,
 CONSTRAINT role_id FOREIGN KEY (role_id) references roles (ID)
 );
