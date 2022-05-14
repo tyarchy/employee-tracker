@@ -17,25 +17,110 @@
 // THEN I am prompted to select an employee to update and their new role and this information is updated in the database
 
 const mysql = require("mysql2");
-const inquirer = require('inquirer');
-const consoleTable = require('console.table')
+const inquirer = require("inquirer");
+const consoleTable = require("console.table");
 
-const db = mysql.createConnection({
-  host: "localhost",
-  port: 3001,
-  user: "root",
-  password: "^n5MRAJEteqG",
-  database: "employees",
-  
-},
-    console.log('connected')
+const db = mysql.createConnection(
+  {
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "^n5MRAJEteqG",
+    database: "employees",
+  },
+  console.log("connected")
 );
 
+//begin interrogation
 
-// con.connect(function(err) {
-//     if (err) throw err;
-//     console.log("Connected!");
-//   });
+const questions = () => {
+  return inquirer
+    .prompt([
+      //options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
+      {
+        type: "list",
+        name: "option",
+        message: "Select an option",
+        choices: [
+          "view all departments",
+          "view all employees",
+          "view all rolls",
+          "add department",
+          "add a role",
+          "add an employee",
+          "update employee role",
+        ],
+      },
+    ])
+    .then((answers) => {
+      switch (answers.option) {
+        case "view all departments":
+          viewDepartments();
+          break;
+        case "view all employees":
+          viewEmployees();
+          break;
+        case "view all rolls":
+          viewRolls();
+          break;
+        case "add department":
+          addDepartment()
+      }
+    });
+};
+
+// view all departments in the database
+const viewDepartments = () => {
+  db.query("SELECT * FROM employees.department", function (err, results) {
+    console.table(results);
+  });
+};
+
+const viewEmployees = () => {
+  db.query("SELECT * FROM employees.employees", function (err, results) {
+    console.table(results);
+  });
+};
+
+const viewRolls = () => {
+  db.query("SELECT * FROM employees.roles", function (err, results) {
+    console.table(results);
+  });
+};
+
+// add a department to the database
+const addDepartment = () => {
+  
+  inquirer.prompt([
+    {
+      name: 'department_name',
+      type: 'input',
+      message: 'Insert name of new department'
+    }
+  ])
+  
+  .then((answer) => {
+  db.query(
+    "INSERT INTO department SET ?", answer);
+  db.query("SELECT * FROM department", function (err, results) { 
+    console.table(results);
+    questions();
+  })
+})
+};
 
 
 
+questions();
+
+
+  //  add a employee
+  // add a role
+  //  update employee
+
+  // BONUS
+  // update emp managers
+  // view emp by manag
+  // view emp by dept
+  // delete dep, emp, role
+  // view total yearly spending on salary
