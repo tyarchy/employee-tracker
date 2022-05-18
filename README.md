@@ -1,5 +1,8 @@
 # Employee Tracker
 
+### Watch Employee Tracker in acton: https://www.youtube.com/watch?v=bB6hKQ49dNo
+
+
 ## Description
 ### Employee Tracker utilizes mysql2 and inquirer to create tables so employer's can see employee roles, names, and salaries.
 
