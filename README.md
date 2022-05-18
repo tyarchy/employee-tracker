@@ -2,6 +2,8 @@
 
 ## Description
 ### Employee Tracker utilizes mysql2 and inquirer to create tables so employer's can see employee roles, names, and salaries.
+
+![Screenshot (175)](https://user-images.githubusercontent.com/92496520/169140004-b4e684c7-c9f4-4347-a3ad-ff60794d2015.png)
   
 ## Table of Contents
 1. [Applications](#Features)
