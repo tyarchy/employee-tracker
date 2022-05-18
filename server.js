@@ -48,7 +48,7 @@ const questions = () => {
           "add department",
           "add a role",
           "add an employee",
-          "update employee role",
+          // "update employee role",
         ],
       },
     ])
@@ -69,11 +69,12 @@ const questions = () => {
         case "add a role":
           addRole()
           break; 
-        case "add employee":
+        case "add an employee":
           addEmployee()
-        case "update Employee":
-          updateEmployee()
           break;
+        // case "update employee role":
+        //   updateEmployee()
+        //   break;
            
       }
     });
@@ -149,22 +150,69 @@ const addEmployee = () => {
       name: 'first_name',
       type: 'input',
       message: 'Add a new Employee first name'
-    }    
+    },
+    {
+      name: 'last_name',
+      type: 'input',
+      message: 'Add a new Employee last name'
+    },
+    {
+      name: 'job_title',
+      type: 'input',
+      message: 'Add a new Employee job title'
+    },
+    {
+      name: 'salary',
+      type: 'input',
+      message: 'Enter employee salary'
+    }
   ])
+    .then((answer) => {
+      db.query(
+        "INSERT INTO employees SET ?", answer);
+      db.query("SELECT * FROM employees", function (err, results) { 
+        console.table(results);
+        questions();
+      })
+    })
   
-  .then((answer) => {
-  db.query(
-    "INSERT INTO employees SET ?", answer);
-  db.query("SELECT * FROM employees", function (err, results) { 
-    console.table(results);
-    questions();
-  })
-})
-};
+  
+  };
+
+  questions();
+//   .then((answer) => {
+//   db.query(
+//     "INSERT INTO employees SET ?", answer);
+//   db.query("SELECT * FROM employees", function (err, results) { 
+//     console.table(results);
+//     questions();
+//   })
+// })
+// };
+// // add a update employee to the database
+// const updateEmployee = () => {
+  
+//   inquirer.prompt([
+//     {
+//       name: 'employees',
+//       type: 'list',
+//       message: 'Enter employees last name to update'
+//     }
+//   ])
+  
+//   .then((answer) => {
+//   db.query(
+//     "INSERT INTO employees SET ?", answer);
+//   db.query("SELECT * FROM employees", function (err, results) { 
+//     console.table(results);
+//     questions();
+//   })
+// })
+// };
+
+// instead of INSERT use UPDATE
 
 
-
-questions();
 
 
 
